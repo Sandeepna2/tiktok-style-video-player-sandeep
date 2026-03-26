@@ -131,7 +131,6 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
       <div style={{
         position: 'relative',
         width: '100%', height: '100%',
-        maxWidth: '480px',
         background: '#111',
         overflow: 'hidden',
         userSelect: 'none',
