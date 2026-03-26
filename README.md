@@ -36,8 +36,8 @@ A high-performance, mobile-responsive vertical video player built with React, Vi
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/tiktok-player-[yourname].git
-   cd tiktok-player-[yourname]
+   git clone https://github.com/Sandeepna2/tiktok-style-video-player-sandeep.git
+cd tiktok-style-video-player-sandeep
    ```
 
 2. **Install dependencies**:
@@ -60,6 +60,3 @@ A high-performance, mobile-responsive vertical video player built with React, Vi
 - **Video Loop**: Currently, the infinite scroll works by appending clones of the initial data. In a real-world app, this would be replaced with a paginated API call.
 - **Mute Policy**: To comply with browser autoplay policies, videos start muted by default.
 - **Audio Sync**: The "Spinning Music Disc" uses the user's avatar as a placeholder for the album art.
-
----
-Built with ❤️ for Kamao.ai React Intern Assessment.
