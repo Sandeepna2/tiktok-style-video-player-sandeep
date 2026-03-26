@@ -2,6 +2,8 @@
 
 A high-performance, mobile-responsive vertical video player built with React, Vite, and Tailwind CSS. This project simulates the core TikTok experience with smooth vertical scroll snapping, interactive overlays, and auto-playback management.
 
+### 🌐 Live Demo: [tiktok-style-video-player-sandeep.vercel.app](https://tiktok-style-video-player-sandeep.vercel.app/)
+
 ## 🚀 Features
 
 ### Core Features (Implemented)
