@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Heart, MessageSquare, Share2, Bookmark, Plus, Check } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const ActionBar = ({ likes, comments, shares, bookmarks, userAvatar, followed: initialFollowed }) => {
   const [liked, setLiked] = useState(false);
@@ -53,24 +53,39 @@ export const ActionBar = ({ likes, comments, shares, bookmarks, userAvatar, foll
             style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
         <motion.button
-          whileTap={{ scale: 0.8 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           onClick={() => setFollowed(v => !v)}
           style={{
             position: 'absolute',
-            bottom: '-9px', left: '50%',
+            bottom: '-10px', left: '50%',
             transform: 'translateX(-50%)',
-            width: '20px', height: '20px',
+            width: '22px', height: '22px',
             borderRadius: '50%',
             background: followed ? '#25F4EE' : '#FE2C55',
-            border: '1.5px solid white',
+            border: '2px solid white',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer',
+            boxShadow: followed 
+              ? '0 0 15px rgba(37,244,238,0.5)' 
+              : '0 0 15px rgba(254,44,85,0.5)',
+            zIndex: 1,
           }}
         >
-          {followed
-            ? <Check size={11} color="white" strokeWidth={3} />
-            : <Plus size={11} color="white" strokeWidth={3} />
-          }
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={followed ? 'check' : 'plus'}
+              initial={{ opacity: 0, rotate: -45, scale: 0.5 }}
+              animate={{ opacity: 1, rotate: 0, scale: 1 }}
+              exit={{ opacity: 0, rotate: 45, scale: 0.5 }}
+              transition={{ duration: 0.2 }}
+            >
+              {followed
+                ? <Check size={12} color="white" strokeWidth={4} />
+                : <Plus size={12} color="white" strokeWidth={4} />
+              }
+            </motion.div>
+          </AnimatePresence>
         </motion.button>
       </div>
 

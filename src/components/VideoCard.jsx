@@ -14,6 +14,8 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
   const [progress, setProgress] = useState(0);
   const [showIcon, setShowIcon] = useState(null); // 'play' | 'pause' | null
   const [tapLikes, setTapLikes] = useState([]);
+  const [isPausedByLongPress, setIsPausedByLongPress] = useState(false);
+  const [showCenterHeart, setShowCenterHeart] = useState(false);
 
   // Updated hook call: threshold as primitive (no infinite re-render bug)
   const [containerRef, isVisible] = useIntersectionObserver(0.7);
@@ -91,6 +93,11 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
       const rect = e.currentTarget.getBoundingClientRect();
       const heart = { x: e.clientX - rect.left, y: e.clientY - rect.top, id: now };
       setTapLikes(prev => [...prev, heart]);
+      
+      // Trigger large center heart
+      setShowCenterHeart(true);
+      setTimeout(() => setShowCenterHeart(false), 800);
+      
       setTimeout(() => setTapLikes(prev => prev.filter(h => h.id !== heart.id)), 1100);
     } else {
       singleTapTimer.current = setTimeout(() => toggle(), 280);
@@ -107,8 +114,9 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
       if (isPlaying) {
         pause();
         resumeAfterLongPress.current = true;
+        setIsPausedByLongPress(true);
       }
-    }, 500);
+    }, 450);
   };
 
   const handlePointerUp = () => {
@@ -116,6 +124,7 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
     if (resumeAfterLongPress.current) {
       play();
       resumeAfterLongPress.current = false;
+      setIsPausedByLongPress(false);
     }
   };
 
@@ -259,6 +268,23 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
 
         {/* Double-tap heart animations */}
         <AnimatePresence>
+          {showCenterHeart && (
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: [0, 1.3, 1], opacity: [0, 1, 0.8] }}
+              exit={{ scale: 1.5, opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              style={{
+                position: 'absolute', inset: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                pointerEvents: 'none', zIndex: 60,
+              }}
+            >
+              <Heart size={140} fill="#FE2C55" color="#FE2C55" 
+                style={{ filter: 'drop-shadow(0 0 30px rgba(254,44,85,0.8))' }} />
+            </motion.div>
+          )}
+
           {tapLikes.map(heart => (
             <motion.div
               key={heart.id}
@@ -275,6 +301,40 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
                 style={{ filter: 'drop-shadow(0 0 16px rgba(254,44,85,0.6))' }} />
             </motion.div>
           ))}
+
+          {isPausedByLongPress && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                position: 'absolute', inset: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: 'rgba(0,0,0,0.2)',
+                backdropFilter: 'blur(3px)',
+                zIndex: 65,
+                pointerEvents: 'none',
+              }}
+            >
+              <div style={{
+                background: 'rgba(0,0,0,0.6)',
+                padding: '16px 32px',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}>
+                <Pause size={32} color="white" fill="white" />
+                <span style={{ 
+                  color: 'white', 
+                  fontSize: '20px', 
+                  fontWeight: 700,
+                  letterSpacing: '1px'
+                }}>PAUSED</span>
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
 
         {/* Right-side Action Bar */}
