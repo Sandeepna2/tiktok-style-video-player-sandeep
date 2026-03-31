@@ -41,7 +41,7 @@ export const VideoFeed = () => {
           }
         });
       },
-      { threshold: 0.6, root: container }
+      { threshold: 0.5, root: container }
     );
 
     Array.from(container.children).forEach((child) => observer.observe(child));

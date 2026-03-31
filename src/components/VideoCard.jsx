@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { ActionBar } from './ActionBar';
 import { UserInfo } from './UserInfo';
 import { VideoProgress } from './VideoProgress';
@@ -16,9 +15,6 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
   const [tapLikes, setTapLikes] = useState([]);
   const [isPausedByLongPress, setIsPausedByLongPress] = useState(false);
   const [showCenterHeart, setShowCenterHeart] = useState(false);
-
-  // Updated hook call: threshold as primitive (no infinite re-render bug)
-  const [containerRef, isVisible] = useIntersectionObserver(0.7);
 
   // --- Playback helpers ---
   const play = async () => {
@@ -55,7 +51,7 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
     setTimeout(() => setShowIcon(null), 900);
   };
 
-  // Sync muted on global toggle
+  // Sync muted on global toggle 
   useEffect(() => {
     if (videoRef.current) videoRef.current.muted = isMuted;
   }, [isMuted]);
@@ -68,12 +64,6 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
       pause();
     }
   }, [isActive]);
-
-  // Fallback: also react to IntersectionObserver visibility
-  useEffect(() => {
-    if (isVisible && !isActive) play();
-    if (!isVisible) pause();
-  }, [isVisible]);
 
   // Space key: toggle-active-video custom event
   useEffect(() => {
@@ -93,11 +83,11 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
       const rect = e.currentTarget.getBoundingClientRect();
       const heart = { x: e.clientX - rect.left, y: e.clientY - rect.top, id: now };
       setTapLikes(prev => [...prev, heart]);
-      
+
       // Trigger large center heart
       setShowCenterHeart(true);
       setTimeout(() => setShowCenterHeart(false), 800);
-      
+
       setTimeout(() => setTapLikes(prev => prev.filter(h => h.id !== heart.id)), 1100);
     } else {
       singleTapTimer.current = setTimeout(() => toggle(), 280);
@@ -130,7 +120,6 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
 
   return (
     <div
-      ref={containerRef}
       style={{
         position: 'relative', width: '100%', height: '100%',
         background: '#000', display: 'flex',
@@ -190,6 +179,10 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
           onLoadedData={() => setIsLoading(false)}
           onWaiting={() => setIsLoading(true)}
           onPlaying={() => setIsLoading(false)}
+          onError={() => {
+            console.error("Video failed to load:", video.url);
+            setIsLoading(false); // Clear skeleton so user sees error or blank state
+          }}
           onTimeUpdate={() => {
             const v = videoRef.current;
             if (v && v.duration) setProgress((v.currentTime / v.duration) * 100);
@@ -280,7 +273,7 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
                 pointerEvents: 'none', zIndex: 60,
               }}
             >
-              <Heart size={140} fill="#FE2C55" color="#FE2C55" 
+              <Heart size={140} fill="#FE2C55" color="#FE2C55"
                 style={{ filter: 'drop-shadow(0 0 30px rgba(254,44,85,0.8))' }} />
             </motion.div>
           )}
@@ -326,9 +319,9 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
                 border: '1px solid rgba(255,255,255,0.1)',
               }}>
                 <Pause size={32} color="white" fill="white" />
-                <span style={{ 
-                  color: 'white', 
-                  fontSize: '20px', 
+                <span style={{
+                  color: 'white',
+                  fontSize: '20px',
                   fontWeight: 700,
                   letterSpacing: '1px'
                 }}>PAUSED</span>

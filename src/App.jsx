@@ -6,20 +6,25 @@ function App() {
     <div style={{
       width: '100vw',
       height: '100vh',
-      background: '#111', // Outer background
+      background: 'radial-gradient(circle at 20% 30%, #1a1a1a 0%, #050505 100%)', // Premium dark gradient
       display: 'flex',
       justifyContent: 'center',
+      alignItems: 'center',
+      position: 'fixed',
+      inset: 0,
     }}>
       <div style={{
         position: 'relative',
         height: '100vh',
         width: '100%',
-        maxWidth: '480px', // Standardized mobile container
+        maxWidth: '430px', // More realistic mobile aspect ratio (iPhone 14/15)
         background: '#000',
         overflow: 'hidden',
         userSelect: 'none',
         fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-        boxShadow: '0 0 100px rgba(0,0,0,0.5)', // Subtle depth
+        boxShadow: '0 0 80px rgba(0,0,0,0.8), 0 0 20px rgba(254,44,85,0.05)', // Glow effect
+        borderRadius: '24px', // Subtle rounding for outer frame
+        border: '1px solid rgba(255,255,255,0.05)',
       }}>
         {/* Top Navigation */}
         <div style={{
