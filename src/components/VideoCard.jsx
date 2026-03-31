@@ -24,7 +24,9 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
     try {
       await v.play();
       setIsPlaying(true);
+      console.log("Video playback started:", video.url);
     } catch (e) {
+      console.warn("Autoplay blocked/failed. Interaction required:", e);
       // Autoplay blocked — user must tap
       setIsPlaying(false);
     }
@@ -158,6 +160,7 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               backdropFilter: 'blur(6px)',
               boxShadow: '0 0 40px rgba(254,44,85,0.3)',
+              animation: 'pulse-beat 1.5s infinite ease-in-out',
             }}>
               <Play color="white" size={36} fill="white" style={{ marginLeft: '5px' }} />
             </div>
@@ -173,15 +176,16 @@ export const VideoCard = ({ video, isMuted, toggleMute, isActive }) => {
           ref={videoRef}
           src={video.url}
           playsInline
+          autoPlay={isActive}
           muted={isMuted}
           loop={false}
           preload="auto"
           onLoadedData={() => setIsLoading(false)}
           onWaiting={() => setIsLoading(true)}
           onPlaying={() => setIsLoading(false)}
-          onError={() => {
-            console.error("Video failed to load:", video.url);
-            setIsLoading(false); // Clear skeleton so user sees error or blank state
+          onError={(e) => {
+            console.error("Video failed to load or source is invalid:", video.url, e);
+            setIsLoading(false); // Clear skeleton so it doesn't spin forever
           }}
           onTimeUpdate={() => {
             const v = videoRef.current;

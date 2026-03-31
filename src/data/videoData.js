@@ -1,7 +1,7 @@
 export const videos = [
   {
     id: 1,
-    url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    url: "https://media.w3.org/2010/05/sintel/trailer.mp4",
     user: { 
       name: "nature_lover", 
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=nature",
@@ -16,7 +16,7 @@ export const videos = [
   },
   {
     id: 2,
-    url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    url: "https://media.w3.org/2010/05/bunny/trailer.mp4",
     user: { 
       name: "tech_guru", 
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=tech",
@@ -31,7 +31,7 @@ export const videos = [
   },
   {
     id: 3,
-    url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    url: "https://media.w3.org/2010/05/video/movie_300.mp4",
     user: { 
       name: "chef_mario", 
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=chef",
@@ -46,7 +46,7 @@ export const videos = [
   },
   {
     id: 4,
-    url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    url: "https://www.w3schools.com/html/mov_bbb.mp4",
     user: { 
       name: "fitness_pro", 
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=fitness",
@@ -61,7 +61,7 @@ export const videos = [
   },
   {
     id: 5,
-    url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+    url: "https://media.w3.org/2010/05/sintel/trailer.mp4",
     user: { 
       name: "travel_bug", 
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=travel",
@@ -76,7 +76,7 @@ export const videos = [
   },
   {
     id: 6,
-    url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+    url: "https://media.w3.org/2010/05/bunny/trailer.mp4",
     user: { 
       name: "car_vibes", 
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=car",

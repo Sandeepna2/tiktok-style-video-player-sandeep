@@ -16,3 +16,17 @@ html, body, #root {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-150%); }
 }
+
+@keyframes pulse-beat {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* Global scrollbar hiding utility */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}

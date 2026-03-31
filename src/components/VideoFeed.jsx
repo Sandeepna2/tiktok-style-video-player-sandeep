@@ -34,17 +34,26 @@ export const VideoFeed = () => {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-index'), 10);
-            if (!isNaN(index)) setActiveIndex(index);
-          }
-        });
+        const entry = entries.find(e => e.isIntersecting);
+        if (entry) {
+          const index = parseInt(entry.target.getAttribute('data-index'), 10);
+          if (!isNaN(index)) setActiveIndex(index);
+        }
       },
-      { threshold: 0.5, root: container }
+      { 
+        threshold: 0.6, // Higher threshold for more reliable center detection
+        root: container,
+        rootMargin: '0px'
+      }
     );
 
-    Array.from(container.children).forEach((child) => observer.observe(child));
+    Array.from(container.children).forEach((child) => {
+      // Only observe video card wrappers, not other potential children
+      if (child.hasAttribute('data-index')) {
+        observer.observe(child);
+      }
+    });
+
     return () => observer.disconnect();
   }, [videos]);
 
@@ -67,17 +76,15 @@ export const VideoFeed = () => {
     <div
       ref={containerRef}
       onScroll={handleScroll}
+      className="hide-scrollbar"
       style={{
         height: '100vh',
         width: '100%',
         overflowY: 'scroll',
         scrollSnapType: 'y mandatory',
-        scrollbarWidth: 'none',
-        msOverflowStyle: 'none',
         background: '#000',
       }}
     >
-      <style>{`div::-webkit-scrollbar { display: none; }`}</style>
 
       {videos.map((video, index) => (
         <div
