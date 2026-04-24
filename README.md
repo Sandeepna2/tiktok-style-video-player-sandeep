@@ -6,7 +6,7 @@ A high-performance, mobile-responsive vertical video player built with React, Vi
 ### 🎥 Demo Video: https://drive.google.com/file/d/1gmySNgTksQdvbi0C7J5D7gHVLL_oVaM2/view
 
 ## 🚀 Features
-
+ 
 ### Core Features (Implemented)
 - **Vertical Video Feed**: Full-screen vertical layout with smooth CSS Scroll Snapping.
 - **Auto-play/Pause**: Videos automatically play when scrolled into view and pause when scrolled away using `IntersectionObserver`.
